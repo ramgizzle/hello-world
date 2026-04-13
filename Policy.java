@@ -6,107 +6,43 @@ public class Policy {
 
     private int policyNumber;
     private String providerName;
-    private String firstName;
-    private String lastName;
-    private int age;
-    private String smokingStatus;
-    private double height;
-    private double weight;
-
-    /**
+    private PolicyHolder policyHolder;
+    private static int policyCount = 0;
+       /**
      * Constructs a Policy object with all required information.
      *
      * @param policyNumber the policy number
      * @param providerName the insurance provider name
-     * @param firstName the policyholder's first name
-     * @param lastName the policyholder's last name
-     * @param age the policyholder's age
-     * @param smokingStatus the smoking status (smoker/non-smoker)
-     * @param height the height in inches
-     * @param weight the weight in pounds
-     */
-    public Policy(int policyNumber, String providerName, String firstName,
-                  String lastName, int age, String smokingStatus,
-                  double height, double weight) {
-
+         */
+    public Policy(int policyNumber, String providerName, PolicyHolder p) {
         this.policyNumber = policyNumber;
         this.providerName = providerName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.smokingStatus = smokingStatus;
-        this.height = height;
-        this.weight = weight;
+        this.policyHolder = p;
+        policyCount++;
     }
 
-    /**
-     * Calculates and returns the BMI of the policyholder.
-     *
-     * @return the BMI value
-     */
-    public double calculateBMI() {
-        return (weight * 703) / (height * height);
-    }
+        public double calculatePolicyPrice() {
+    double price = 600;
 
-    /**
-     * Calculates and returns the policy price based on age,
-     * smoking status, and BMI.
-     *
-     * @return the calculated policy price
-     */
-    public double calculatePolicyPrice() {
-        double price = 600;
+    if (policyHolder.getAge() > 50)
+        price += 75;
 
-        if (age > 50)
-            price += 75;
+    if (policyHolder.getSmokingStatus().equalsIgnoreCase("smoker"))
+        price += 100;
 
-        if (smokingStatus.equalsIgnoreCase("smoker"))
-            price += 100;
+    if (policyHolder.calculateBMI() > 35)
+        price += (policyHolder.calculateBMI() - 35) * 20;
 
-        if (calculateBMI() > 35)
-            price += (calculateBMI() - 35) * 20;
+    return price;
+}  
 
-        return price;
-    }
-
-    /**
-     * @return the policy number
-     */
     public int getPolicyNumber() { return policyNumber; }
+    public String getProviderName() { return providerName; }  
+    public PolicyHolder getPolicyHolder() {
+     return policyHolder;
+    }
+    public static int getPolicyCount() { return policyCount; }
 
-    /**
-     * @return the provider name
-     */
-    public String getProviderName() { return providerName; }
-
-    /**
-     * @return the policyholder's first name
-     */
-    public String getFirstName() { return firstName; }
-
-    /**
-     * @return the policyholder's last name
-     */
-    public String getLastName() { return lastName; }
-
-    /**
-     * @return the policyholder's age
-     */
-    public int getAge() { return age; }
-
-    /**
-     * @return the smoking status
-     */
-    public String getSmokingStatus() { return smokingStatus; }
-
-    /**
-     * @return the height in inches
-     */
-    public double getHeight() { return height; }
-
-    /**
-     * @return the weight in pounds
-     */
-    public double getWeight() { return weight; }
+     
 }
   
